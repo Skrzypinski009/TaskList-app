@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div>
-        <form method="POST" action="{% url 'register' %}">
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="fieldWrapper">
-                    {{ field.label_tag }} {{ field }}
-                    {% for error in field.errors %}
-                        {{error|escape}}
-                    {% endfor %}
+    <div class="p-3">
+        <h1 class="text-center">Register</h1>
+        <div class="mx-auto border rounded shadow p-3" style="max-width: 500px;">
+            <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+                {{form}}
+                <br/>
+                <div class="d-flex flex-row justify-content-between">
+                    <button class="btn btn-success" type="submit" >Register</button>
+                    <a class="text-primary text-decoration-none" href={% url 'login'%}>Login -></a>
                 </div>
-            {% endfor %}
-            <input type="submit" value="Register">
-        </form>
-        <a href={% url 'login'%}>Login -></a>
+            </form>
+        </div>
     </div>
 {% endblock %}
