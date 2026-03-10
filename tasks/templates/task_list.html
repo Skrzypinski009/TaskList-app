@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load bootstrap_icons %}
+{% load static %}
+{% block content%}
+  <h1 class="mt-4 text-center">
+    {{task_list.title}}
+  </h1>
+  <div class=" p-4" style="max-width: 800px; margin: 0 auto">
+
+    {% if not task_list.tasks.first %}
+        <p class="text-center">No tasks yet...</p>
+    {% endif %}
+
+    {% for task in task_list.tasks.all %}
+      <div class="p-2 mt-3 shadow rounded border">
+        <div class="d-flex w-100">
+          <div class="mt-1">
+            <input class="me-2 task-check"
+                   style="width: 1.5rem; height:1.5rem"
+                   type="checkbox"
+                   {% if task.done %}checked{% endif %}
+                   data-id="{{ task.id }}">
+          </div>
+          <div class="lead flex-grow-1 mb-2">
+            {{task.title}}
+          </div>
+          <a class="text-secondary" href="{% url 'edit_task' task.id %}">
+            {% custom_icon 'pencil' size='1.2rem'%}
+          </a>
+        </div>
+        <pre class="m-0 ms-3">{{task.description}}</pre>
+        <p class="m-0 mt-2 fst-italic">{{task.deadline}}</p>
+      </div>
+    {% endfor %}
+
+  </div>
+  <script src="{% static 'scripts/task_checked.js' %}"></script>
+{% endblock %}
