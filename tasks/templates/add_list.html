@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>New Task List</h1>
-    <form method="POST" action="
-        {% if not list_id %}
-            {% url 'add_list' %}
-        {% else %}
-            {% url 'edit_list' list_id %}
+    <h1 class="text-center">New Task List</h1>
+    <div class="mx-auto" style="max-width: 800px">
+        <form method="POST" action="
+                      {% if not list_id %}
+                      {% url 'add_list' %}
+                      {% else %}
+                      {% url 'edit_list' list_id %}
+                      {% endif %}
+                      ">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit" class="btn btn-success">Submit</button>
+            <a class="btn btn-secondary">Cancel</a>
+        </form>
+        {% if list_id %}
+        <a class="text-decoration-none btn btn-danger"
+           href={% url 'delete_list' list_id %}>
+            Delete
+        </a>
         {% endif %}
-    ">
-        {% csrf_token %}
-        {{form}}
-        <button type="submit">Submit</button>
-    </form>
+    </div>
 {% endblock %}

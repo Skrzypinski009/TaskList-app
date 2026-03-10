@@ -2,18 +2,28 @@
 {% load bootstrap_icons %}
 {% load static %}
 {% block content%}
-  <h1 class="mt-4 text-center">
-    {{task_list.title}}
-  </h1>
-  <div class=" p-4" style="max-width: 800px; margin: 0 auto">
+  <div class="border rounded shadow my-3 p-3" style="max-width: 800px; margin: 0 auto">
 
-    {% if not task_list.tasks.first %}
+    <div class="mb-4 d-flex flex-row flex-wrap align-items-center justify-content-between">
+      <h1 class="p-2 text-start">
+        {{task_list.title}}
+      </h1>
+      <div class="me-2">
+        <a class="btn btn-dark m-1" href="{% url 'add_task' task_list.id %}">{% custom_icon 'plus-lg' size='1.1rem'%}</a>
+        <a class="btn btn-dark m-1" href="{% url 'edit_list' task_list.id %}">{% custom_icon 'pencil' size='1.1rem'%}</a>
+        <a class="btn btn-danger m-1" href="{% url 'delete_list' task_list.id %}">{% custom_icon 'trash' size='1.1rem'%}</a>
+      </div>
+    </div>
+
+    <div>
+      {% if not task_list.tasks.first %}
         <p class="text-center">No tasks yet...</p>
-    {% endif %}
+      {% endif %}
 
-    {% for task in task_list.tasks.all %}
-      <div class="p-2 mt-3 shadow rounded border">
-        <div class="d-flex w-100">
+      {% for task in task_list.tasks.all %}
+
+
+        <div class="d-flex w-100 mt-4 align-items-start">
           <div class="mt-1">
             <input class="me-2 task-check"
                    style="width: 1.5rem; height:1.5rem"
@@ -21,18 +31,21 @@
                    {% if task.done %}checked{% endif %}
                    data-id="{{ task.id }}">
           </div>
-          <div class="lead flex-grow-1 mb-2">
-            {{task.title}}
+          <div class="h4 flex-grow-1 mb-2"> {{task.title}} </div>
+          <p class="m-0 fst-italic">End: {{task.deadline}}</p>
+          <div class="d-flex flex-row ms-2">
+            <a class=" p-1 text-dark" href="{% url 'edit_task' task.id %}">{% custom_icon 'pencil' size='1.1rem'%}</a>
+            <a class="ms-2 p-1 text-danger" href="{% url 'delete_task' task.id %}">{% custom_icon 'trash' size='1.1rem'%}</a>
           </div>
-          <a class="text-secondary" href="{% url 'edit_task' task.id %}">
-            {% custom_icon 'pencil' size='1.2rem'%}
-          </a>
         </div>
-        <pre class="m-0 ms-3">{{task.description}}</pre>
-        <p class="m-0 mt-2 fst-italic">{{task.deadline}}</p>
-      </div>
-    {% endfor %}
 
+        <div class="p-2 rounded border" style="background: #f8f8f8">
+            <pre class="">{{task.description}}</pre>
+        </div>
+
+      {% endfor %}
+
+    </div>
   </div>
   <script src="{% static 'scripts/task_checked.js' %}"></script>
 {% endblock %}

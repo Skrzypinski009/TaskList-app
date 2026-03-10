@@ -25,31 +25,26 @@
                             </a>
                         </div>
                     </div>
-                    <hr />
                     {% if not task_list.tasks %}
                         <p class="text-center">No tasks yet...</p>
+                    {% else %}
+                        <div class="overflow-auto flex-grow-1 border rounded p-2" style="background: #f8f8f8;" >
+                            {% for task in task_list.tasks %}
+                                <div class="d-flex">
+                                    <div class="mt-1">
+                                        <input class="me-2 task-check"
+                                               style="width: 1.5rem; height:1.5rem"
+                                               type="checkbox"
+                                               {% if task.done %}checked{% endif %}
+                                               data-id="{{ task.id }}">
+                                    </div>
+                                    <div class="lead flex-grow-1 mb-2">
+                                        {{task.title}}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
                     {% endif %}
-
-                    <div class="overflow-auto flex-grow-1" >
-                        {% for task in task_list.tasks %}
-                            <div class="d-flex">
-                                <div class="mt-1">
-                                    <input class="me-2 task-check"
-                                           style="width: 1.5rem; height:1.5rem"
-                                           type="checkbox"
-                                           {% if task.done %}checked{% endif %}
-                                           data-id="{{ task.id }}">
-                                </div>
-                                <div class="lead flex-grow-1 mb-2">
-                                    {{task.title}}
-                                </div>
-                                <a class="col-1 text-secondary" href="{% url 'edit_task' task.id %}">
-                                    {% custom_icon 'pencil' size='1.2rem'%}
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </div>
-
                 </div>
                 </div>
             {% endfor %}

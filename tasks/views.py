@@ -155,7 +155,7 @@ def edit_task(request, task_id):
 @login_required
 def delete_task(request, task_id):
     Task.objects.get(id=task_id).delete()
-    return redirect("home")
+    return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 @login_required
