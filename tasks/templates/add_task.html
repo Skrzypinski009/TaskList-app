@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>New Task</h1>
+    <form method="POST" action="
+        {% if not task_id %}
+            {% url 'add_task' list_id %}
+        {% else %}
+            {% url 'edit_task' task_id %}
+        {% endif %}
+    ">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

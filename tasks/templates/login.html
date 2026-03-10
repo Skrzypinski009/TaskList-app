@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.label_tag }} {{ field }}
+                    {% for error in field.errors %}
+                        {{error|escape}}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            {%for error in form.errors%}
+                {{error}}
+            {%endfor%}
+            <input type="submit" value="Login">
+        </form>
+        <a href={% url 'register'%}>Register -></a>
+    </div>
+{% endblock %}

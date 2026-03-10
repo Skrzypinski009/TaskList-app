@@ -1,0 +1,12 @@
+<head>
+    <title>{{title}}</title>
+    {% load static %}
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    {% block content %} {% endblock %}
+</body>

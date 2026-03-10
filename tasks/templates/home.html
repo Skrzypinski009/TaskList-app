@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load bootstrap_icons %}
+{% block content%}
+    <h1 class="text-center my-5">
+        Task Lists
+        <a class="btn btn-dark" href="{% url 'add_list' %}">{% custom_icon 'plus-lg' size='1.3rem'%}</a>
+    </h1>
+    <div style="max-width: 1200px; margin: 0 auto;" class="row">
+
+    {% for task_list in task_lists%}
+        <div class="col-lg-4 col-md-6">
+            <div style="box-shadow: 0 0 10px gray; margin: 10px auto; max-width: 400px;" class="p-3">
+                <div class="row">
+                    <div class="h3 col-8">
+                        {{ task_list.data.title }}
+                    </div>
+                    <div class="col-4 text-center">
+                        <a class="btn btn-outline-dark p-1" href="{% url 'add_task' task_list.data.id %}">
+                            {% custom_icon 'plus-lg' size='1.2rem'%}
+                        </a>
+                        <a class="btn btn-outline-dark p-1" href="{% url 'edit_list' task_list.data.id %}">
+                            {% custom_icon 'pencil' size='1.2rem'%}
+                        </a>
+                        <a class="btn btn-outline-dark p-1" href="{% url 'delete_list' task_list.data.id %}">
+                            {% custom_icon 'trash' size='1.2rem'%}
+                        </a>
+                    </div>
+                </div>
+                {% if not task_list.tasks %}
+                    <p class="text-center">No tasks yet...</p>
+                {% endif %}
+
+                {% for task in task_list.tasks %}
+                    <hr />
+                    <div class="row">
+                        <div class="col-1 mt-1">
+                            <input style="width: 1.5rem; height:1.5rem" type="checkbox">
+                        </div>
+                        <div class="lead col-8 mb-2">
+                            {{task.title}}
+                        </div>
+                        <a class="col-1 btn btn-outline-secondary" href="{% url 'edit_task' task.id %}">
+                            {% custom_icon 'pencil' size='1.2rem'%}
+                        </a>
+                        <a class="col-1" href="{% url 'delete_task' task.id %}">
+                            {% custom_icon 'trash' size='1.2rem'%}
+                        </a>
+                    </div>
+                    <p style="font-style:italic; margin-left:2.2rem">{{task.description}}</p>
+                    <p>Deadline: {{task.deadline}}</p>
+                {% endfor %}
+
+                </div>
+        </div>
+    {% endfor %}
+
+    </div>
+{% endblock content %}

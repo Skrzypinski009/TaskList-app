@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>New Task List</h1>
+    <form method="POST" action="
+        {% if not list_id %}
+            {% url 'add_list' %}
+        {% else %}
+            {% url 'edit_list' list_id %}
+        {% endif %}
+    ">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
